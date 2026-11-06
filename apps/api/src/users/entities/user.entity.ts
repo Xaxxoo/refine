@@ -44,6 +44,12 @@ export class User {
   @Column({ type: "double precision", nullable: true })
   longitude!: number | null;
 
+  @Column({ type: "text", array: true, nullable: true })
+  interests!: string[] | null;
+
+  @Column({ type: "float", array: true, nullable: true, select: false })
+  embedding!: number[] | null;
+
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
