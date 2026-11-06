@@ -17,6 +17,9 @@ export class User {
   @Column({ unique: true })
   username!: string;
 
+  @Column({ select: false })
+  password!: string;
+
   @Column({ name: "display_name" })
   displayName!: string;
 
