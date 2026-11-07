@@ -1,14 +1,17 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import authConfig from "../config/auth.config";
 import databaseConfig from "../config/database.config";
 import ollamaConfig from "../config/ollama.config";
+import resendConfig from "../config/resend.config";
+import uploadConfig from "../config/upload.config";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, ollamaConfig],
+      load: [authConfig, databaseConfig, ollamaConfig, resendConfig, uploadConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
