@@ -11,6 +11,8 @@ import { Server, Socket } from "socket.io";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { MessagesService } from "./messages.service";
+import { UsersService } from "../users/users.service";
+import { SwipesService } from "../swipes/swipes.service";
 
 @WebSocketGateway({ namespace: "/chat", cors: { origin: "*" } })
 export class MessagesGateway
@@ -19,10 +21,15 @@ export class MessagesGateway
   @WebSocketServer()
   server!: Server;
 
+  // Track connected users: userId → Set of socketIds (multi-device support)
+  private connectedUsers = new Map<string, Set<string>>();
+
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly messagesService: MessagesService,
+    private readonly usersService: UsersService,
+    private readonly swipesService: SwipesService,
   ) {}
 
   async handleConnection(client: Socket) {
@@ -40,15 +47,57 @@ export class MessagesGateway
         secret: this.configService.get<string>("auth.jwtSecret"),
       });
 
-      (client as any).userId = payload.sub;
-      client.join(payload.sub);
+      const userId = payload.sub;
+      (client as any).userId = userId;
+      client.join(userId);
+
+      // Track connection
+      if (!this.connectedUsers.has(userId)) {
+        this.connectedUsers.set(userId, new Set());
+      }
+      this.connectedUsers.get(userId)!.add(client.id);
+
+      // Update last seen
+      await this.usersService.updateLastSeen(userId);
+
+      // Notify matched users that this user is online
+      // (only if this is the first connection for this user)
+      if (this.connectedUsers.get(userId)!.size === 1) {
+        const matches = await this.swipesService.getMatches(userId);
+        for (const match of matches) {
+          this.server.to(match.id).emit("userOnline", { userId });
+        }
+      }
     } catch {
       client.disconnect();
     }
   }
 
-  handleDisconnect(_client: Socket) {
-    // cleanup handled automatically by socket.io room management
+  async handleDisconnect(client: Socket) {
+    const userId = (client as any).userId;
+    if (!userId) return;
+
+    // Remove socket from tracking
+    const sockets = this.connectedUsers.get(userId);
+    if (sockets) {
+      sockets.delete(client.id);
+      if (sockets.size === 0) {
+        this.connectedUsers.delete(userId);
+
+        // Update last seen
+        await this.usersService.updateLastSeen(userId);
+
+        // Notify matched users that this user is offline
+        const user = await this.usersService.findById(userId);
+        const matches = await this.swipesService.getMatches(userId);
+        for (const match of matches) {
+          this.server.to(match.id).emit("userOffline", {
+            userId,
+            lastSeenAt: user.lastSeenAt,
+          });
+        }
+      }
+    }
   }
 
   @SubscribeMessage("sendMessage")

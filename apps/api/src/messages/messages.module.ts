@@ -7,6 +7,7 @@ import { MessagesController } from "./messages.controller";
 import { MessagesGateway } from "./messages.gateway";
 import { SwipesModule } from "../swipes/swipes.module";
 import { BlocksModule } from "../blocks/blocks.module";
+import { UsersModule } from "../users/users.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { BlocksModule } from "../blocks/blocks.module";
     JwtModule.register({}),
     SwipesModule,
     BlocksModule,
+    UsersModule,
   ],
   controllers: [MessagesController],
   providers: [MessagesService, MessagesGateway],

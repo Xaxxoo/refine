@@ -53,6 +53,9 @@ export class User {
   @Column({ type: "float", array: true, nullable: true, select: false })
   embedding!: number[] | null;
 
+  @Column({ name: "last_seen_at", type: "timestamp", nullable: true })
+  lastSeenAt!: Date | null;
+
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
