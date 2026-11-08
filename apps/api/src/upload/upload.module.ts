@@ -6,6 +6,7 @@ import { diskStorage } from "multer";
 import { randomUUID } from "crypto";
 import { extname } from "path";
 import { User } from "../users/entities/user.entity";
+import { UserPhoto } from "./entities/user-photo.entity";
 import { UploadService } from "./upload.service";
 import { UploadController } from "./upload.controller";
 
@@ -18,7 +19,7 @@ const ALLOWED_MIMES = [
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, UserPhoto]),
     MulterModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({

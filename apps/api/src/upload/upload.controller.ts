@@ -1,14 +1,19 @@
 import {
   BadRequestException,
+  Body,
   Controller,
+  Delete,
+  Get,
   Param,
   Post,
+  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { UploadService } from "./upload.service";
+import { ReorderPhotosDto } from "./dto/reorder-photos.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
 
@@ -28,5 +33,44 @@ export class UploadController {
       throw new BadRequestException("File is required");
     }
     return this.uploadService.updateAvatar(id, user.userId, file.filename);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(":id/photos")
+  @UseInterceptors(FileInterceptor("file"))
+  addPhoto(
+    @Param("id") id: string,
+    @UploadedFile() file: Express.Multer.File,
+    @CurrentUser() user: { userId: string },
+  ) {
+    if (!file) {
+      throw new BadRequestException("File is required");
+    }
+    return this.uploadService.addPhoto(id, user.userId, file.filename);
+  }
+
+  @Get(":id/photos")
+  getPhotos(@Param("id") id: string) {
+    return this.uploadService.getPhotos(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(":id/photos/:photoId")
+  deletePhoto(
+    @Param("id") id: string,
+    @Param("photoId") photoId: string,
+    @CurrentUser() user: { userId: string },
+  ) {
+    return this.uploadService.deletePhoto(id, user.userId, photoId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(":id/photos/reorder")
+  reorderPhotos(
+    @Param("id") id: string,
+    @Body() dto: ReorderPhotosDto,
+    @CurrentUser() user: { userId: string },
+  ) {
+    return this.uploadService.reorderPhotos(id, user.userId, dto.photoIds);
   }
 }
