@@ -4,7 +4,9 @@ import { Repository } from "typeorm";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const pgvector = require("pgvector");
 import { User } from "./entities/user.entity";
+import { UserPreferences } from "./entities/user-preferences.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { UpdatePreferencesDto } from "./dto/update-preferences.dto";
 import { EmbeddingService } from "../embedding/embedding.service";
 import { BlocksService } from "../blocks/blocks.service";
 import { SwipesService } from "../swipes/swipes.service";
@@ -15,6 +17,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    @InjectRepository(UserPreferences)
+    private readonly preferencesRepository: Repository<UserPreferences>,
     private readonly embeddingService: EmbeddingService,
     private readonly blocksService: BlocksService,
     private readonly swipesService: SwipesService,
@@ -60,6 +64,27 @@ export class UsersService {
     return user;
   }
 
+  async getPreferences(userId: string): Promise<UserPreferences> {
+    let prefs = await this.preferencesRepository.findOneBy({ userId });
+    if (!prefs) {
+      prefs = this.preferencesRepository.create({ userId });
+      await this.preferencesRepository.save(prefs);
+    }
+    return prefs;
+  }
+
+  async updatePreferences(
+    userId: string,
+    dto: UpdatePreferencesDto,
+  ): Promise<UserPreferences> {
+    let prefs = await this.preferencesRepository.findOneBy({ userId });
+    if (!prefs) {
+      prefs = this.preferencesRepository.create({ userId });
+    }
+    Object.assign(prefs, dto);
+    return this.preferencesRepository.save(prefs);
+  }
+
   async discoverUsers(
     userId: string,
     limit: number,
@@ -69,15 +94,82 @@ export class UsersService {
     const swipedIds = await this.swipesService.getSwipedUserIds(userId);
     const excludeIds = [...new Set([...blockedIds, ...swipedIds, userId])];
 
+    const prefs = await this.preferencesRepository.findOneBy({ userId });
+    const currentUser = await this.usersRepository.findOneBy({ id: userId });
+
     const qb = this.usersRepository
       .createQueryBuilder("user")
       .where("user.isActive = true")
-      .andWhere("user.id NOT IN (:...excludeIds)", { excludeIds })
-      .orderBy("user.createdAt", "DESC")
-      .skip(offset)
-      .take(limit);
+      .andWhere("user.id NOT IN (:...excludeIds)", { excludeIds });
+
+    if (prefs) {
+      // Age filter
+      if (prefs.minAge != null) {
+        qb.andWhere(
+          "user.dateOfBirth <= (CURRENT_DATE - INTERVAL '1 year' * :minAge)",
+          { minAge: prefs.minAge },
+        );
+      }
+      if (prefs.maxAge != null) {
+        qb.andWhere(
+          "user.dateOfBirth >= (CURRENT_DATE - INTERVAL '1 year' * :maxAge)",
+          { maxAge: prefs.maxAge },
+        );
+      }
+
+      // Gender filter
+      if (prefs.preferredGender != null) {
+        qb.andWhere("user.gender = :preferredGender", {
+          preferredGender: prefs.preferredGender,
+        });
+      }
+
+      // Distance filter (only if current user has a location)
+      if (
+        prefs.maxDistanceKm != null &&
+        currentUser?.latitude != null &&
+        currentUser?.longitude != null
+      ) {
+        qb.andWhere(
+          `earth_distance(
+            ll_to_earth(:lat, :lng),
+            ll_to_earth(user.latitude, user.longitude)
+          ) <= :maxDist`,
+          {
+            lat: currentUser.latitude,
+            lng: currentUser.longitude,
+            maxDist: prefs.maxDistanceKm * 1000,
+          },
+        );
+        // Only apply distance filter to users that have location set
+        qb.andWhere("user.latitude IS NOT NULL");
+        qb.andWhere("user.longitude IS NOT NULL");
+      }
+    }
+
+    qb.orderBy("user.createdAt", "DESC").skip(offset).take(limit);
 
     return qb.getMany();
+  }
+
+  async updateLastSeen(userId: string): Promise<void> {
+    await this.usersRepository.update(userId, { lastSeenAt: new Date() });
+  }
+
+  async getOnlineStatus(
+    userId: string,
+  ): Promise<{ isOnline: boolean; lastSeenAt: Date | null }> {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException(`User ${userId} not found`);
+    }
+
+    // Consider "online" if last seen within 2 minutes
+    const isOnline =
+      user.lastSeenAt != null &&
+      Date.now() - user.lastSeenAt.getTime() < 2 * 60 * 1000;
+
+    return { isOnline, lastSeenAt: user.lastSeenAt };
   }
 
   async deleteAccount(userId: string): Promise<void> {

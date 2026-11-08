@@ -13,6 +13,7 @@ import {
 import { UsersService } from "./users.service";
 import { UpdateInterestsDto } from "./dto/update-interests.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { UpdatePreferencesDto } from "./dto/update-preferences.dto";
 import { DiscoverQueryDto } from "./dto/discover-query.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CurrentUser } from "../auth/decorators/current-user.decorator";
@@ -35,9 +36,30 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get("me/preferences")
+  getPreferences(@CurrentUser() user: { userId: string }) {
+    return this.usersService.getPreferences(user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put("me/preferences")
+  updatePreferences(
+    @Body() dto: UpdatePreferencesDto,
+    @CurrentUser() user: { userId: string },
+  ) {
+    return this.usersService.updatePreferences(user.userId, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Delete("me")
   deleteAccount(@CurrentUser() user: { userId: string }) {
     return this.usersService.deleteAccount(user.userId);
+  }
+
+  @Get(":id/status")
+  @UseGuards(JwtAuthGuard)
+  getOnlineStatus(@Param("id") id: string) {
+    return this.usersService.getOnlineStatus(id);
   }
 
   @Get(":id")
