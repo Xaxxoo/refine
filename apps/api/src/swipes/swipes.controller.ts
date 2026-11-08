@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 import { SwipesService } from "./swipes.service";
 import { CreateSwipeDto } from "./dto/create-swipe.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
@@ -21,5 +29,14 @@ export class SwipesController {
   @Get("matches")
   getMatches(@CurrentUser() user: { userId: string }) {
     return this.swipesService.getMatches(user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete("matches/:userId")
+  unmatch(
+    @Param("userId") matchedUserId: string,
+    @CurrentUser() user: { userId: string },
+  ) {
+    return this.swipesService.unmatch(user.userId, matchedUserId);
   }
 }

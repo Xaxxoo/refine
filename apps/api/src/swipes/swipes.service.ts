@@ -98,6 +98,30 @@ export class SwipesService {
     return !!swipe;
   }
 
+  async unmatch(userId: string, matchedUserId: string): Promise<{ message: string }> {
+    const swipeA = await this.swipesRepository.findOneBy({
+      swiperId: userId,
+      swipedId: matchedUserId,
+      isMatch: true,
+    });
+
+    const swipeB = await this.swipesRepository.findOneBy({
+      swiperId: matchedUserId,
+      swipedId: userId,
+      isMatch: true,
+    });
+
+    if (!swipeA || !swipeB) {
+      throw new NotFoundException("Match not found");
+    }
+
+    swipeA.isMatch = false;
+    swipeB.isMatch = false;
+    await this.swipesRepository.save([swipeA, swipeB]);
+
+    return { message: "Unmatched successfully" };
+  }
+
   async getSwipedUserIds(userId: string): Promise<string[]> {
     const swipes = await this.swipesRepository.find({
       where: { swiperId: userId },
