@@ -11,6 +11,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { UploadService } from "./upload.service";
 import { ReorderPhotosDto } from "./dto/reorder-photos.dto";
@@ -22,6 +23,7 @@ export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 5, ttl: 60000 }, long: { limit: 20, ttl: 3600000 } })
   @Post(":id/avatar")
   @UseInterceptors(FileInterceptor("file"))
   uploadAvatar(
@@ -36,6 +38,7 @@ export class UploadController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 5, ttl: 60000 }, long: { limit: 20, ttl: 3600000 } })
   @Post(":id/photos")
   @UseInterceptors(FileInterceptor("file"))
   addPhoto(

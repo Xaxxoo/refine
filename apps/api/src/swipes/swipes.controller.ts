@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
 } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 import { SwipesService } from "./swipes.service";
 import { CreateSwipeDto } from "./dto/create-swipe.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
@@ -17,6 +18,7 @@ export class SwipesController {
   constructor(private readonly swipesService: SwipesService) {}
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 10, ttl: 10000 }, long: { limit: 50, ttl: 60000 } })
   @Post()
   createSwipe(
     @Body() dto: CreateSwipeDto,

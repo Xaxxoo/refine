@@ -7,6 +7,7 @@ import {
   Query,
   UseGuards,
 } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 import { MessagesService } from "./messages.service";
 import { SendMessageDto } from "./dto/send-message.dto";
 import { MessagesQueryDto } from "./dto/messages-query.dto";
@@ -39,6 +40,7 @@ export class MessagesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ short: { limit: 2, ttl: 1000 }, medium: { limit: 15, ttl: 10000 }, long: { limit: 60, ttl: 60000 } })
   @Post(":userId")
   sendMessage(
     @Param("userId") userId: string,

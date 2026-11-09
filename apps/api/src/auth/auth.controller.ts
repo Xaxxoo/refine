@@ -1,4 +1,5 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 import { AuthService } from "./auth.service";
 import { SignupDto } from "./dto/signup.dto";
 import { LoginDto } from "./dto/login.dto";
@@ -13,11 +14,13 @@ import { CurrentUser } from "./decorators/current-user.decorator";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 5, ttl: 60000 }, long: { limit: 10, ttl: 3600000 } })
   @Post("signup")
   signup(@Body() dto: SignupDto) {
     return this.authService.signup(dto);
   }
 
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 5, ttl: 60000 }, long: { limit: 20, ttl: 3600000 } })
   @Post("login")
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
@@ -29,6 +32,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 1, ttl: 60000 }, long: { limit: 5, ttl: 3600000 } })
   @Post("send-verification")
   sendVerification(@CurrentUser() user: { userId: string }) {
     return this.authService.sendVerificationEmail(user.userId);
@@ -39,6 +43,7 @@ export class AuthController {
     return this.authService.verifyEmail(dto.token);
   }
 
+  @Throttle({ short: { limit: 1, ttl: 1000 }, medium: { limit: 1, ttl: 60000 }, long: { limit: 5, ttl: 3600000 } })
   @Post("forgot-password")
   forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto.email);
