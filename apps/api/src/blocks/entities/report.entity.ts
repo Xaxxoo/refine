@@ -28,6 +28,18 @@ export class Report {
   @Column({ default: "pending" })
   status!: string;
 
+  @Column({ name: "reviewed_by", type: "uuid", nullable: true })
+  reviewedBy!: string | null;
+
+  @Column({ name: "reviewed_at", type: "timestamp", nullable: true })
+  reviewedAt!: Date | null;
+
+  @Column({ name: "action_taken", length: 50, nullable: true })
+  actionTaken!: string | null;
+
+  @Column({ name: "admin_notes", type: "text", nullable: true })
+  adminNotes!: string | null;
+
   @ManyToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn({ name: "reporter_id" })
   reporter!: User;
@@ -35,6 +47,10 @@ export class Report {
   @ManyToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn({ name: "reported_id" })
   reported!: User;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: "reviewed_by" })
+  reviewer!: User | null;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
