@@ -6,12 +6,13 @@ import databaseConfig from "../config/database.config";
 import ollamaConfig from "../config/ollama.config";
 import resendConfig from "../config/resend.config";
 import uploadConfig from "../config/upload.config";
+import aiConfig from "../config/ai.config";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [authConfig, databaseConfig, ollamaConfig, resendConfig, uploadConfig],
+      load: [authConfig, databaseConfig, ollamaConfig, resendConfig, uploadConfig, aiConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
