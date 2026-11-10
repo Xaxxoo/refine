@@ -27,6 +27,12 @@ export class Swipe {
   @Column({ name: "is_match", default: false })
   isMatch!: boolean;
 
+  @Column({ type: "text", nullable: true })
+  message!: string | null;
+
+  @Column({ length: 20, default: "discovery" })
+  source!: string;
+
   @ManyToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn({ name: "swiper_id" })
   swiper!: User;
