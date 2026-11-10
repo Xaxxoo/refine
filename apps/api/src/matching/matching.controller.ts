@@ -1,7 +1,9 @@
 import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
 import { MatchingService } from "./matching.service";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { CurrentUser } from "../auth/decorators/current-user.decorator";
 import { NearbyQueryDto } from "./dto/nearby-query.dto";
+import { DiscoverCompatibleQueryDto } from "./dto/discover-compatible-query.dto";
 
 @UseGuards(JwtAuthGuard)
 @Controller("matching")
@@ -30,5 +32,21 @@ export class MatchingController {
       query.radius,
       query.limit,
     );
+  }
+
+  @Get("discover")
+  discoverCompatible(
+    @CurrentUser("sub") userId: string,
+    @Query() query: DiscoverCompatibleQueryDto,
+  ) {
+    return this.matchingService.discoverCompatible(userId, query.limit, query.offset);
+  }
+
+  @Get("explanation/:candidateId")
+  getExplanation(
+    @CurrentUser("sub") userId: string,
+    @Param("candidateId") candidateId: string,
+  ) {
+    return this.matchingService.getOrGenerateExplanation(userId, candidateId);
   }
 }
