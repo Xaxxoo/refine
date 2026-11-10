@@ -5,9 +5,14 @@ import { User } from "../users/entities/user.entity";
 import { SwipesService } from "./swipes.service";
 import { SwipesController } from "./swipes.controller";
 import { BlocksModule } from "../blocks/blocks.module";
+import { NotificationsModule } from "../notifications/notifications.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Swipe, User]), BlocksModule],
+  imports: [
+    TypeOrmModule.forFeature([Swipe, User]),
+    BlocksModule,
+    NotificationsModule,
+  ],
   controllers: [SwipesController],
   providers: [SwipesService],
   exports: [SwipesService],

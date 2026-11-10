@@ -9,6 +9,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Swipe } from "./entities/swipe.entity";
 import { BlocksService } from "../blocks/blocks.service";
+import { NotificationsService } from "../notifications/notifications.service";
 import { CreateSwipeDto } from "./dto/create-swipe.dto";
 import { User } from "../users/entities/user.entity";
 
@@ -20,6 +21,7 @@ export class SwipesService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly blocksService: BlocksService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async createSwipe(
@@ -74,8 +76,46 @@ export class SwipesService {
       swipedId: dto.targetUserId,
       action: dto.action,
       isMatch,
+      message: dto.message ?? null,
+      source: dto.source ?? "discovery",
     });
     await this.swipesRepository.save(swipe);
+
+    // Create notifications
+    if (isMatch) {
+      const swiperUser = await this.usersRepository.findOneBy({ id: swiperId });
+      const swiperName = swiperUser?.displayName ?? "Someone";
+
+      // Notify both users of mutual match
+      await this.notificationsService.createNotification({
+        userId: dto.targetUserId,
+        type: "mutual_match",
+        title: "New Match!",
+        body: `You and ${swiperName} have matched!`,
+        data: { matchedUserId: swiperId },
+      });
+      await this.notificationsService.createNotification({
+        userId: swiperId,
+        type: "mutual_match",
+        title: "New Match!",
+        body: `You and ${targetUser.displayName} have matched!`,
+        data: { matchedUserId: dto.targetUserId },
+      });
+    } else if (dto.action === "like") {
+      // Notify target of expression of interest
+      const swiperUser = await this.usersRepository.findOneBy({ id: swiperId });
+      const swiperName = swiperUser?.displayName ?? "Someone";
+
+      await this.notificationsService.createNotification({
+        userId: dto.targetUserId,
+        type: "expression_of_interest",
+        title: "Someone is interested!",
+        body: dto.message
+          ? `${swiperName} expressed interest with a message`
+          : `${swiperName} expressed interest in you`,
+        data: { fromUserId: swiperId },
+      });
+    }
 
     return { swipe, isMatch };
   }

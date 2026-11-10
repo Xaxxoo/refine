@@ -13,6 +13,7 @@ import { ConfigService } from "@nestjs/config";
 import { MessagesService } from "./messages.service";
 import { UsersService } from "../users/users.service";
 import { SwipesService } from "../swipes/swipes.service";
+import { NotificationsService } from "../notifications/notifications.service";
 
 @WebSocketGateway({ namespace: "/chat", cors: { origin: "*" } })
 export class MessagesGateway
@@ -30,6 +31,7 @@ export class MessagesGateway
     private readonly messagesService: MessagesService,
     private readonly usersService: UsersService,
     private readonly swipesService: SwipesService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async handleConnection(client: Socket) {
@@ -117,6 +119,23 @@ export class MessagesGateway
 
       this.server.to(data.receiverId).emit("newMessage", message);
       client.emit("messageSent", message);
+
+      // Create persistent notification for the receiver
+      const sender = await this.usersService.findById(senderId);
+      await this.notificationsService.createNotification({
+        userId: data.receiverId,
+        type: "new_message",
+        title: "New Message",
+        body: `${sender.displayName} sent you a message`,
+        data: { senderId, messageId: message.id },
+      });
+
+      // Emit notification via socket
+      this.server.to(data.receiverId).emit("notification", {
+        type: "new_message",
+        senderId,
+        messageId: message.id,
+      });
     } catch (error: any) {
       client.emit("messageError", { error: error.message });
     }
