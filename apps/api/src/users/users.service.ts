@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, Inject, forwardRef } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -10,7 +10,22 @@ import { UpdatePreferencesDto } from "./dto/update-preferences.dto";
 import { EmbeddingService } from "../embedding/embedding.service";
 import { BlocksService } from "../blocks/blocks.service";
 import { SwipesService } from "../swipes/swipes.service";
+import { MatchingService } from "../matching/matching.service";
+import { BriefsService } from "../briefs/briefs.service";
 import { randomUUID } from "crypto";
+
+// Fields that affect profile embedding
+const SEMANTIC_FIELDS = [
+  "selfDescription",
+  "bio",
+  "religion",
+  "relationshipIntention",
+  "education",
+  "occupation",
+  "smoking",
+  "drinking",
+  "children",
+] as const;
 
 @Injectable()
 export class UsersService {
@@ -22,6 +37,10 @@ export class UsersService {
     private readonly embeddingService: EmbeddingService,
     private readonly blocksService: BlocksService,
     private readonly swipesService: SwipesService,
+    @Inject(forwardRef(() => MatchingService))
+    private readonly matchingService: MatchingService,
+    @Inject(forwardRef(() => BriefsService))
+    private readonly briefsService: BriefsService,
   ) {}
 
   async findById(userId: string): Promise<User> {
@@ -38,7 +57,17 @@ export class UsersService {
       throw new NotFoundException(`User ${userId} not found`);
     }
     Object.assign(user, dto);
-    return this.usersRepository.save(user);
+    const saved = await this.usersRepository.save(user);
+
+    // Check if any semantic fields changed → regenerate profile embedding
+    const semanticChanged = SEMANTIC_FIELDS.some(
+      (field) => dto[field as keyof UpdateUserDto] !== undefined,
+    );
+    if (semanticChanged) {
+      await this.regenerateProfileEmbedding(userId);
+    }
+
+    return saved;
   }
 
   async updateInterests(userId: string, interests: string[]): Promise<User> {
@@ -61,6 +90,10 @@ export class UsersService {
     );
 
     user.interests = normalized;
+
+    // Also regenerate profile embedding since interests are semantic
+    await this.regenerateProfileEmbedding(userId);
+
     return user;
   }
 
@@ -89,7 +122,14 @@ export class UsersService {
     userId: string,
     limit: number,
     offset: number,
-  ): Promise<User[]> {
+  ): Promise<User[] | { candidates: any[]; total: number }> {
+    // Check if user has an active completed brief → use AI matching
+    const activeBrief = await this.briefsService.getActiveBrief(userId);
+    if (activeBrief && activeBrief.processingStatus === "completed") {
+      return this.matchingService.discoverCompatible(userId, limit, offset);
+    }
+
+    // Fallback to existing filter-based discovery
     const blockedIds = await this.blocksService.getBlockedUserIds(userId);
     const swipedIds = await this.swipesService.getSwipedUserIds(userId);
     const excludeIds = [...new Set([...blockedIds, ...swipedIds, userId])];
@@ -189,8 +229,41 @@ export class UsersService {
     user.interests = null;
     user.latitude = null;
     user.longitude = null;
+    user.selfDescription = null;
+    user.education = null;
+    user.religion = null;
+    user.relationshipIntention = null;
+    user.maritalHistory = null;
+    user.children = null;
+    user.heightCm = null;
+    user.smoking = null;
+    user.drinking = null;
+    user.relocationIntention = null;
+    user.occupation = null;
+    user.employmentStatus = null;
+    user.preferredDatingGenders = null;
+    user.role = "user";
     user.isActive = false;
 
+    // Null out embeddings via raw SQL (TypeORM can't handle vector type)
+    await this.usersRepository.query(
+      `UPDATE "users" SET "profile_embedding" = NULL WHERE "id" = $1`,
+      [userId],
+    );
+
     await this.usersRepository.save(user);
+  }
+
+  async regenerateProfileEmbedding(userId: string): Promise<void> {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+    if (!user) return;
+
+    const embedding = await this.embeddingService.generateProfileEmbedding(user);
+    if (embedding.length === 0) return;
+
+    await this.usersRepository.query(
+      `UPDATE "users" SET "profile_embedding" = $1 WHERE "id" = $2`,
+      [pgvector.toSql(embedding), userId],
+    );
   }
 }

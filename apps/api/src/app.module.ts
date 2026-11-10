@@ -13,6 +13,10 @@ import { SwipesModule } from "./swipes/swipes.module";
 import { MessagesModule } from "./messages/messages.module";
 import { EmailModule } from "./email/email.module";
 import { UploadModule } from "./upload/upload.module";
+import { AiModule } from "./ai/ai.module";
+import { BriefsModule } from "./briefs/briefs.module";
+import { NotificationsModule } from "./notifications/notifications.module";
+import { AdminModule } from "./admin/admin.module";
 
 @Module({
   imports: [
@@ -43,6 +47,10 @@ import { UploadModule } from "./upload/upload.module";
     MessagesModule,
     EmailModule,
     UploadModule,
+    AiModule,
+    BriefsModule,
+    NotificationsModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [
