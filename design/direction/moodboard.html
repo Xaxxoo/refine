@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Refine — Lamplight moodboard</title>
+<meta name="viewport" content="width=1600">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0A09; --s1:#12100E; --s2:#1A1714; --s3:#24201C;
+  --line:rgba(244,238,228,.10); --line2:rgba(244,238,228,.20);
+  --text:#F4EEE4; --t2:#B9B0A2; --t3:#8A8276;
+  --ember:#E0673C; --ember-hi:#F09470; --ember-wash:rgba(224,103,60,.12);
+  --harm:#D1A85F; --adire:#8FA2DC; --sage:#8FB59A; --hib:#E0697B;
+  --serif:'Instrument Serif','Iowan Old Style',Georgia,serif;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,monospace;
+  --out:cubic-bezier(.22,1,.36,1); --inout:cubic-bezier(.65,0,.35,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{width:1600px;min-width:1600px;margin:0 auto;background:var(--bg);color:var(--text);font:400 16px/24px var(--sans);-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+body::before{content:"";position:absolute;inset:0 0 auto 0;height:900px;background:radial-gradient(70% 60% at 50% -8%,rgba(224,103,60,.16),transparent 70%);pointer-events:none}
+body::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.035;mix-blend-mode:screen;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+section,header,footer{position:relative;z-index:1;padding:0 64px}
+.mono{font:500 11px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.eyebrow{color:var(--t3)}
+.eyebrow b{color:var(--ember-hi);font-weight:500;margin-right:14px}
+.rule{height:1px;background:var(--line);border:0}
+h2.sec{font:400 64px/64px var(--serif);letter-spacing:-.02em;margin:18px 0 0}
+h2.sec i{color:var(--t2)}
+.sec-head{display:grid;grid-template-columns:1fr 520px;gap:48px;align-items:end;margin-bottom:44px}
+.sec-head p{color:var(--t2);font-size:15px;line-height:23px}
+section{padding-top:112px}
+
+/* ---------- top bar + hero ---------- */
+.top{display:flex;justify-content:space-between;align-items:center;padding:32px 0 0;color:var(--t3)}
+.mark{display:flex;align-items:center;gap:12px;color:var(--text)}
+.lamp{width:14px;height:14px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px var(--bg),0 0 0 5px rgba(224,103,60,.5),0 0 22px 4px rgba(224,103,60,.35)}
+.mark span{font:400 26px/26px var(--serif);letter-spacing:-.01em}
+.hero{padding-top:76px;padding-bottom:20px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end}
+.hero h1{font:400 232px/200px var(--serif);letter-spacing:-.04em;margin:30px 0 0 -8px}
+.hero h1 i{color:var(--ember-hi)}
+.tag{font:400 44px/48px var(--serif);letter-spacing:-.01em;margin-top:30px;max-width:640px}
+.tag i{color:var(--t2)}
+.feel{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+.feel span{border:1px solid var(--line2);border-radius:999px;padding:7px 16px;color:var(--t2);font:500 11px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.hero-right{padding-bottom:8px}
+.sentence{font:400 40px/56px var(--serif);letter-spacing:-.01em;color:var(--t2);max-width:700px}
+.sentence u{text-decoration:none;color:var(--text);background:linear-gradient(var(--line2),var(--line2)) 0 100%/100% 1px no-repeat;padding-bottom:3px}
+.sentence u.k{background-image:linear-gradient(var(--text),var(--text))}
+.sentence u.n{background:linear-gradient(90deg,var(--line2) 55%,transparent 0) 0 100%/6px 1px repeat-x}
+.chips-hero{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;max-width:700px}
+.hero-foot{display:flex;gap:40px;margin-top:64px;border-top:1px solid var(--line);padding:22px 0 0;color:var(--t3)}
+.hero-foot div{flex:1}
+.hero-foot p{color:var(--t2);font-size:14px;line-height:21px;margin-top:6px;text-transform:none;letter-spacing:0;font-family:var(--sans);font-weight:400}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex;align-items:center;gap:9px;height:36px;padding:0 16px 0 13px;border-radius:999px;font:500 14px/20px var(--sans);white-space:nowrap;letter-spacing:.005em}
+.chip::before{content:"";width:4px;height:14px;border-radius:2px;flex:none}
+.chip.nn{background:var(--text);color:#0B0A09}
+.chip.nn::before{background:#0B0A09}
+.chip.st{background:var(--s3);color:var(--text);box-shadow:inset 0 0 0 1px rgba(244,238,228,.5)}
+.chip.st::before{background:linear-gradient(180deg,var(--text) 50%,rgba(244,238,228,.25) 50%)}
+.chip.nh{background:transparent;color:var(--t2);box-shadow:inset 0 0 0 1px transparent;border:1px dashed rgba(244,238,228,.3);height:36px}
+.chip.nh::before{background:repeating-linear-gradient(180deg,var(--t3) 0 3px,transparent 3px 5px)}
+.chip.edit{box-shadow:inset 0 0 0 1px var(--text),0 0 0 3px var(--ember-wash),0 0 0 4px rgba(224,103,60,.55)}
+.chip.q{background:transparent;color:var(--t2);border:1px solid var(--line2)}
+.chip.q::before{content:"?";width:auto;height:auto;background:none;font:500 12px/1 var(--mono);color:var(--harm)}
+.chip small{font:500 11px/1 var(--mono);color:inherit;opacity:.55;margin-left:2px}
+
+/* ---------- inspiration ---------- */
+.board{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:168px;gap:22px 20px}
+.pin{display:flex;flex-direction:column;min-height:0}
+.pin .im{flex:1;min-height:0;border-radius:22px;overflow:hidden;position:relative;background:var(--s2);box-shadow:inset 0 0 0 1px var(--line)}
+.pin .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pin .im::after{content:"";position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 0 0 1px rgba(244,238,228,.08);pointer-events:none}
+.pin figcaption{padding:12px 4px 0;font-size:13px;line-height:18px;color:var(--t2);height:62px;overflow:hidden}
+.pin figcaption b{font:500 11px/16px var(--mono);letter-spacing:.06em;color:var(--ember-hi);text-transform:uppercase;margin-right:8px}
+.pin figcaption em{font-style:normal;color:var(--t3)}
+.p-profile{grid-column:1/4;grid-row:1/5}
+.p-profile .im img{height:100%;transform:scale(1.14);transform-origin:56% 42%}
+.p-chat2{grid-column:4/9;grid-row:1/4}
+.p-chat3{grid-column:9/13;grid-row:1/3}
+.p-match{grid-column:9/13;grid-row:3/5}
+.p-quote{grid-column:4/9;grid-row:4/5;align-self:center;padding:0 8px}
+.p-quote q{display:block;font:400 40px/44px var(--serif);letter-spacing:-.01em;quotes:none}
+.p-quote q i{color:var(--ember-hi)}
+.p-style{grid-column:1/5;grid-row:5/7}
+.p-brief1{grid-column:5/8;grid-row:5/7}
+.p-brief3{grid-column:8/13;grid-row:5/7}
+.p-brief3 .im img{object-position:50% 100%}
+.p-b4{grid-column:1/5;grid-row:7/9}
+.p-b5{grid-column:5/9;grid-row:7/9}
+.p-b8{grid-column:9/13;grid-row:7/9}
+.p-style .im img,.p-brief1 .im img{height:112%;width:112%;object-position:0 0}
+.p-anti{grid-column:1/13;display:flex;align-items:center;gap:22px;border-top:1px solid var(--line);padding-top:26px;grid-row:9/10}
+.p-anti .thumbs{display:flex;gap:10px}
+.p-anti img{width:82px;height:82px;object-fit:cover;border-radius:14px;filter:grayscale(1) brightness(.6)}
+.p-anti p{color:var(--t2);font-size:14px;line-height:21px;max-width:880px}
+.p-anti p b{font:500 11px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--hib);display:block;margin-bottom:4px}
+
+.face{background:url(../inspiration/profile_1.png) 51% 25%/251% auto no-repeat;filter:saturate(.85) sepia(.06)}
+.face2{background:url(../inspiration/style_1.png) 12% 40%/430% auto no-repeat;filter:saturate(.85) sepia(.06)}
+.bgimg{position:absolute;inset:0}
+/* ---------- palette ---------- */
+.pal-label{display:flex;justify-content:space-between;color:var(--t3);margin:0 0 14px}
+.sw-row{display:grid;gap:12px;margin-bottom:44px}
+.sw-row.d{grid-template-columns:repeat(8,1fr)}
+.sw{height:210px;border-radius:20px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:inset 0 0 0 1px var(--line)}
+.sw .n{font:400 26px/28px var(--serif)}
+.sw .h{font:500 12px/16px var(--mono);letter-spacing:.04em}
+.sw .r{font:400 12px/16px var(--sans);opacity:.75;margin-top:2px}
+.sw.tall{height:260px}
+.light-panel{background:#F5F0E6;color:#1A1613;border-radius:28px;padding:30px;margin-top:8px}
+.light-panel .pal-label{color:#6F675C}
+.light-panel .sw-row{margin-bottom:0;grid-template-columns:repeat(9,1fr)}
+.light-panel .sw{height:160px;box-shadow:inset 0 0 0 1px rgba(26,22,19,.12)}
+.ember-rule{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:20px;margin-top:44px}
+.er{border:1px solid var(--line);border-radius:24px;padding:24px;background:var(--s1)}
+.er h4{font:400 28px/32px var(--serif);margin:10px 0 8px}
+.er p{color:var(--t2);font-size:14px;line-height:21px}
+.bar{display:flex;height:56px;border-radius:14px;overflow:hidden;margin-top:18px;box-shadow:inset 0 0 0 1px var(--line)}
+.bar i{display:block}
+.tiers{display:flex;flex-direction:column;gap:10px;margin-top:18px;align-items:flex-start}
+
+/* ---------- type ---------- */
+.type-grid{display:grid;grid-template-columns:900px 1fr;gap:64px}
+.spec-big{font:400 168px/150px var(--serif);letter-spacing:-.035em}
+.spec-big i{color:var(--ember-hi)}
+.fonts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
+.font{border-top:1px solid var(--line2);padding-top:16px}
+.font .gl{font-size:84px;line-height:88px;margin:12px 0 6px;letter-spacing:-.02em}
+.font p{font-size:14px;line-height:21px;color:var(--t2)}
+.scale{display:flex;flex-direction:column}
+.scale div{display:grid;grid-template-columns:100px 1fr;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}
+.scale div:first-child{padding-top:0}
+.scale .mono{color:var(--t3)}
+.scale .mono s{text-decoration:none;display:block;color:var(--t3);opacity:.7;text-transform:none;letter-spacing:.02em;font-size:10.5px}
+.s-xl{font:400 64px/60px var(--serif);letter-spacing:-.02em}
+.s-l{font:400 44px/44px var(--serif);letter-spacing:-.015em}
+.s-m{font:400 32px/36px var(--serif);letter-spacing:-.01em}
+.s-q{font:italic 400 22px/30px var(--serif);color:var(--t2)}
+.s-t{font:500 18px/26px var(--sans)}
+.s-b{font:400 16px/24px var(--sans);color:var(--t2)}
+.s-s{font:400 14px/21px var(--sans);color:var(--t2)}
+.s-c{font:400 12px/16px var(--sans);color:var(--t3)}
+
+/* ---------- UI stage ---------- */
+.stage{background:linear-gradient(180deg,#0E0C0B,#090807);border:1px solid var(--line);border-radius:36px;padding:48px;display:grid;grid-template-columns:540px 400px 1fr;gap:36px;position:relative;overflow:hidden}
+.stage::before{content:"";position:absolute;left:0;right:0;top:0;height:260px;background:radial-gradient(60% 100% at 50% 0,rgba(224,103,60,.10),transparent);pointer-events:none}
+.frag-label{color:var(--t3);margin-bottom:14px;display:flex;justify-content:space-between}
+.col{display:flex;flex-direction:column;gap:36px;position:relative}
+.panel{background:var(--s1);border-radius:28px;box-shadow:inset 0 0 0 1px var(--line);padding:26px}
+.composer{border-radius:26px;padding:24px 24px 18px;background:#0A0908;position:relative;
+  background:linear-gradient(#0A0908,#0A0908) padding-box,conic-gradient(from 200deg,rgba(244,238,228,.12),rgba(224,103,60,.7),rgba(244,238,228,.5),rgba(244,238,228,.1),rgba(244,238,228,.12)) border-box;border:1px solid transparent}
+.composer .p{font:400 12px/16px var(--mono);letter-spacing:.08em;color:var(--t3);text-transform:uppercase}
+.composer h3{font:400 38px/40px var(--serif);letter-spacing:-.015em;margin:10px 0 18px}
+.composer .txt{font:400 24px/38px var(--serif);color:var(--t2);letter-spacing:-.005em}
+.composer .txt u{text-decoration:none;color:var(--text);background:linear-gradient(var(--text),var(--text)) 0 100%/100% 1px no-repeat;padding-bottom:2px}
+.composer .txt u.d{background-image:linear-gradient(var(--line2),var(--line2))}
+.composer .ghost{color:rgba(244,238,228,.28)}
+.composer .caret{display:inline-block;width:1.5px;height:22px;background:var(--text);vertical-align:-3px;margin-left:1px}
+.composer .bar2{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:var(--t3);font-size:12px}
+.send{width:40px;height:40px;border-radius:50%;background:var(--text);display:grid;place-items:center;flex:none}
+.reading{display:flex;align-items:center;gap:10px;margin:22px 4px 14px;color:var(--t2);font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 12px rgba(224,103,60,.6)}
+.chips-flow{display:flex;flex-wrap:wrap;gap:9px}
+.disc{margin:16px 4px 0;font-size:12px;color:var(--t3)}
+.disc a{color:var(--t2);text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:3px}
+.lanes{display:flex;flex-direction:column;gap:6px}
+.lane{padding:16px 0 16px;border-top:1px solid var(--line)}
+.lane header{padding:0;display:flex;justify-content:space-between;margin-bottom:12px;color:var(--t2)}
+.lane header span{color:var(--t3);background:var(--s3);border-radius:6px;padding:0 6px}
+.lane.drop{border-top-color:var(--line2)}
+.slot{height:36px;border-radius:999px;border:1px dashed var(--line2);width:150px;display:inline-flex;align-items:center;justify-content:center;color:var(--t3);font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.clar{margin-top:6px;background:var(--s2);border-radius:20px;padding:16px 18px;box-shadow:inset 0 0 0 1px var(--line)}
+.clar p{font:italic 400 20px/26px var(--serif);color:var(--text);margin-bottom:12px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{height:32px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line2);display:inline-flex;align-items:center;font-size:13px;color:var(--t2)}
+.pill.on{background:var(--text);color:#0B0A09;box-shadow:none}
+.btn{height:52px;padding:0 30px;border-radius:999px;font:500 15px/20px var(--sans);display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;color:var(--text);background:transparent;letter-spacing:.005em}
+.btn.pri{background:var(--text);color:#0B0A09}
+.btn.sec{box-shadow:inset 0 0 0 1px var(--line2)}
+.btn.txt{padding:0 12px;color:var(--t2)}
+.btn.dis{background:var(--s3);color:var(--t3)}
+.btn.press{transform:scale(.97);background:#DDD6CA;color:#0B0A09}
+.btn.sm{height:40px;padding:0 20px;font-size:14px}
+.btnrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btngrid{display:flex;flex-wrap:wrap;gap:20px 16px;align-items:flex-start}
+.btn{white-space:nowrap}
+.cap{font:400 11px/14px var(--mono);letter-spacing:.06em;color:var(--t3);text-transform:uppercase;display:block;margin-top:8px}
+
+/* match card */
+.phone{width:400px;border-radius:44px;background:#0B0A09;box-shadow:0 0 0 1px var(--line2),0 40px 80px rgba(0,0,0,.55);overflow:hidden;position:relative}
+.photo{height:560px;position:relative;overflow:hidden}
+.photo img{position:absolute;left:0;top:0;width:100%;height:112%;object-fit:cover;object-position:50% 0;filter:saturate(.88) contrast(1.02) sepia(.08)}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,9,.35) 0,rgba(11,10,9,0) 18%,rgba(11,10,9,0) 40%,rgba(11,10,9,.62) 66%,rgba(11,10,9,.96) 100%)}
+.sb{position:absolute;z-index:3;top:16px;left:30px;right:30px;display:flex;justify-content:space-between;font:600 14px/20px var(--sans)}
+.seg{position:absolute;z-index:3;top:48px;left:24px;right:24px;display:flex;gap:5px}
+.seg i{flex:1;height:2px;border-radius:2px;background:rgba(244,238,228,.28)}
+.seg i:first-child{background:var(--text)}
+.ov{position:absolute;z-index:3;left:26px;right:26px;bottom:18px}
+.ov .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:var(--t2)}
+.ov .meta .live{display:flex;align-items:center;gap:8px}
+.ov .meta .live i{width:6px;height:6px;border-radius:50%;background:var(--ember);box-shadow:0 0 8px var(--ember)}
+.ov .nm{border-top:1px solid var(--line2);display:flex;align-items:baseline;gap:14px;padding-top:2px}
+.ov .nm h3{font:400 76px/74px var(--serif);letter-spacing:-.025em}
+.ov .nm span{font:400 76px/74px var(--serif);color:var(--t2);letter-spacing:-.025em}
+.ov .one{border-top:1px solid var(--line2);margin-top:8px;padding-top:10px;color:var(--t2);font-size:14px;line-height:21px}
+.why{padding:18px 26px 28px;background:var(--s1)}
+.why .tabs{display:flex;gap:24px;margin-bottom:14px;color:var(--t3)}
+.why .tabs b{color:var(--text);font-weight:500;border-bottom:1px solid var(--text);padding-bottom:6px}
+.ev{display:grid;grid-template-columns:22px 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.ev:first-of-type{border-top:0}
+.ev svg{margin-top:3px}
+.ev p{font-size:15px;line-height:22px;color:var(--text)}
+.ev q{display:block;font:italic 400 17px/22px var(--serif);color:var(--t3);margin-top:3px;quotes:none}
+.ev.diff p{color:var(--t2)}
+.ev.diff svg{color:var(--harm)}
+.why h5{font:500 11px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin:14px 0 4px}
+.why h5.d{color:var(--harm)}
+.why h5.m{color:var(--text)}
+.why .foot{margin-top:14px;font-size:12px;color:var(--t3)}
+
+/* chat */
+.chat{width:100%;background:radial-gradient(120% 40% at 50% 0,rgba(224,103,60,.09),transparent 70%),#0A0908;border-radius:36px;box-shadow:inset 0 0 0 1px var(--line);padding:22px 20px 20px;display:flex;flex-direction:column}
+.ch-head{display:flex;align-items:center;gap:14px;padding-bottom:16px}
+.ch-head .back{width:40px;height:40px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line2);display:grid;place-items:center}
+.av{width:44px;height:44px;border-radius:14px;overflow:hidden;position:relative;flex:none}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:saturate(.85)}
+.ch-head h4{font:400 26px/26px var(--serif)}
+.ch-head small{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t3)}
+.ch-head small i{width:6px;height:6px;border-radius:50%;background:var(--sage)}
+.whystrip{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(244,238,228,.04);box-shadow:inset 0 0 0 1px var(--line);margin-bottom:14px}
+.whystrip p{font-size:13px;line-height:18px;color:var(--t2);flex:1}
+.whystrip p i{font:italic 400 15px/18px var(--serif);color:var(--text)}
+.day{display:flex;align-items:center;gap:12px;color:var(--t3);margin:8px 0 14px}
+.day::before,.day::after{content:"";flex:1;height:1px;background:var(--line)}
+.bub{max-width:82%;padding:12px 16px;border-radius:20px;font-size:15px;line-height:22px;margin-bottom:6px}
+.bub.in{background:var(--s2);color:var(--text);border-bottom-left-radius:6px}
+.bub.out{background:var(--s3);color:var(--text);margin-left:auto;border-bottom-right-radius:6px;box-shadow:inset 0 0 0 1px var(--line)}
+.time{font:400 11px/14px var(--mono);color:var(--t3);margin:0 4px 14px;letter-spacing:.04em}
+.time.r{text-align:right}
+.typing{display:flex;gap:4px;width:56px;height:32px;border-radius:16px;background:var(--s2);align-items:center;justify-content:center;margin-bottom:12px}
+.typing i{width:4px;height:4px;border-radius:50%;background:var(--t3)}
+.comp{display:flex;gap:10px;align-items:center;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line2);padding:6px 6px 6px 18px;color:var(--t3);font-size:15px}
+.comp span{flex:1}
+
+/* mutual */
+.mutual{border-radius:32px;background:radial-gradient(60% 50% at 50% 38%,rgba(224,103,60,.18),transparent 70%),#0A0908;box-shadow:inset 0 0 0 1px var(--line);padding:36px 30px 30px;text-align:center;position:relative;overflow:hidden}
+.pair{height:150px;position:relative;margin-bottom:14px}
+.pair .a,.pair .b{position:absolute;top:18px;width:112px;height:112px;border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px var(--line2),0 18px 40px rgba(0,0,0,.5)}
+.pair .a{left:calc(50% - 116px)}.pair .b{left:calc(50% + 4px)}
+.pair img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.pair .b img{object-position:50% 14%}
+.pair .a img{object-position:50% 20%;filter:saturate(.85) hue-rotate(-8deg) brightness(.9)}
+.pair .a,.pair .b{z-index:1}
+.pair .ln{position:absolute;z-index:0;left:calc(50% - 140px);right:calc(50% - 140px);top:74px;height:1px;background:linear-gradient(90deg,transparent,var(--ember),transparent)}
+.mutual h3{font:400 40px/44px var(--serif);letter-spacing:-.015em}
+.mutual p{font:italic 400 22px/28px var(--serif);color:var(--t2);margin:8px auto 22px;max-width:330px}
+
+/* ---------- motion ---------- */
+.mo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.mo{background:var(--s1);border-radius:26px;box-shadow:inset 0 0 0 1px var(--line);padding:22px;display:flex;flex-direction:column;min-height:640px}
+.mo .n{font:400 56px/56px var(--serif);color:var(--ember-hi);letter-spacing:-.03em}
+.mo h4{font:400 28px/30px var(--serif);margin:6px 0 4px;letter-spacing:-.01em}
+.mo .sub{color:var(--t3);margin-bottom:16px}
+.demo{height:150px;border-radius:18px;background:#0A0908;box-shadow:inset 0 0 0 1px var(--line);position:relative;overflow:hidden;margin-bottom:18px}
+.mo ol{list-style:none;counter-reset:s;font-size:13px;line-height:19px;color:var(--t2);display:flex;flex-direction:column;gap:9px}
+.mo ol li{counter-increment:s;padding-left:30px;position:relative}
+.mo ol li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:2px;font:500 10px/14px var(--mono);color:var(--t3)}
+.mo ol b{color:var(--text);font-weight:500}
+.mo .rm{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:12px;line-height:17px;color:var(--t3)}
+.mo .rm b{font:500 10px/14px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t2);margin-right:6px}
+.tok{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px;margin-top:16px}
+.tok .box{background:var(--s1);border-radius:26px;box-shadow:inset 0 0 0 1px var(--line);padding:24px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{padding:9px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:500 11px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+td code{font:500 12px/16px var(--mono);color:var(--ember-hi)}
+td:last-child{color:var(--t2)}
+.src td:first-child{width:215px}
+.tok h4{font:400 28px/30px var(--serif);margin:8px 0 14px}
+.tok p{color:var(--t2);font-size:14px;line-height:21px}
+.tok .dd{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.tok .dd div{border:1px solid var(--line);border-radius:16px;padding:14px}
+.tok .dd b{font:400 32px/32px var(--serif);display:block}
+.tok .dd span{color:var(--t3)}
+
+/* mini demos, final state is default; animation is play-once on scroll */
+.play-on *{animation-play-state:running!important}
+.demo *{animation-play-state:paused}
+@keyframes up{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes tick{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes bloom{0%{opacity:0;transform:scale(.6)}25%{opacity:.5}100%{opacity:0;transform:scale(1.7)}}
+@keyframes inL{from{opacity:0;transform:translateX(-90px)}to{opacity:1;transform:none}}
+@keyframes inR{from{opacity:0;transform:translateX(90px)}to{opacity:1;transform:none}}
+@keyframes lift{0%{transform:translate(0,0)}25%{transform:translate(0,-6px) scale(1.06)}70%{transform:translate(0,-70px) scale(1.06)}100%{transform:translate(0,-70px) scale(1)}}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.3);opacity:1}}
+.d1 .t{position:absolute;left:18px;top:18px;right:34px;font:400 18px/28px var(--serif);color:var(--t2)}
+.d1 .t u{text-decoration:none;position:relative;color:var(--text)}
+.d1 .t u::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--text);transform-origin:left;animation:draw .36s var(--inout) both}
+.d1 .t u:nth-of-type(1)::after{animation-delay:.3s}.d1 .t u:nth-of-type(2)::after{animation-delay:.4s}
+.d1 .c{position:absolute;bottom:14px;left:16px;display:flex;gap:6px}
+.d1 .c .chip{height:28px;font-size:12px;padding:0 11px 0 9px;animation:up .35s var(--out) both}
+.d1 .c{bottom:12px;gap:5px}.d1 .c .chip{padding:0 8px 0 7px;font-size:11px;gap:5px;height:26px}
+.d1 .c .chip:nth-child(1){animation-delay:.6s}.d1 .c .chip:nth-child(2){animation-delay:.66s}.d1 .c .chip:nth-child(3){animation-delay:.72s}
+.d1 .dot{position:absolute;right:16px;top:16px;animation:breathe 2.4s ease-in-out 3}
+.d2 .l{position:absolute;left:16px;right:16px;height:1px;background:var(--line)}
+.d2 .l span{position:absolute;top:-17px;left:0;font:500 9px/12px var(--mono);letter-spacing:.08em;color:var(--t3);text-transform:uppercase}
+.d2 .m{position:absolute;left:18px;top:104px;animation:lift 1.6s var(--out) .3s both;z-index:2}
+.d2 .m .chip{height:28px;font-size:12px;padding:0 11px 0 9px}
+.d2 .slot{position:absolute;left:18px;top:34px;height:28px;width:98px;z-index:1;font-size:9px}
+.d3 .e{position:absolute;left:18px;right:18px;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--text);animation:up .4s var(--out) both}
+.d3 .e svg path{stroke-dasharray:24;animation:tick .35s var(--out) both}
+.d3 .e:nth-child(1){top:20px;animation-delay:.2s}.d3 .e:nth-child(1) path{animation-delay:.2s}
+.d3 .e:nth-child(2){top:50px;animation-delay:.65s}.d3 .e:nth-child(2) path{animation-delay:.65s}
+.d3 .e:nth-child(3){top:80px;animation-delay:1.1s}.d3 .e:nth-child(3) path{animation-delay:1.1s}
+.d3 .e.df{top:114px;color:var(--harm);animation-delay:1.7s;font-size:11px}
+.d4 .r{position:absolute;left:16px;right:16px;height:34px;border-radius:10px;background:var(--s2);display:flex;align-items:center;gap:10px;padding:0 10px;font-size:11px;color:var(--t2);animation:up .45s var(--out) both;box-shadow:inset 0 0 0 1px var(--line)}
+.d4 .r i{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#6c5646,#2b211b)}
+.d4 .r em{font:500 9px/12px var(--mono);color:var(--t3);margin-left:auto;font-style:normal}
+.d4 .r:nth-child(1){top:14px;animation-delay:.1s}.d4 .r:nth-child(2){top:54px;animation-delay:.18s}.d4 .r:nth-child(3){top:94px;animation-delay:.26s}
+.d5 .a,.d5 .b{position:absolute;top:34px;width:70px;height:70px;border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px var(--line2)}
+.d5 img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.d5 .a{left:calc(50% - 74px);animation:inL .9s var(--out) both}
+.d5 .b{left:calc(50% + 4px);animation:inR .9s var(--out) both}
+.d5 .b img{object-position:50% 12%}.d5 .a img{object-position:50% 20%;filter:saturate(.8) brightness(.85)}
+.d5 .a,.d5 .b{z-index:1}
+.d5 .ln{position:absolute;z-index:0;top:69px;left:calc(50% - 90px);right:calc(50% - 90px);height:1px;background:var(--ember);transform-origin:center;animation:draw .5s var(--inout) .5s both}
+.d5 .bl{position:absolute;left:calc(50% - 60px);top:15px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(224,103,60,.7),transparent 65%);animation:bloom .9s ease-out .75s both}
+.d5 .bl,.d5 .ln{pointer-events:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* footer */
+.foot-note{margin-top:100px;padding:36px 64px 72px!important;display:flex;justify-content:space-between;color:var(--t3);border-top:1px solid var(--line)}
+.alt{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.altcard{border-radius:28px;padding:32px;position:relative;overflow:hidden}
+.altcard.paper{background:#F5F0E6;color:#1A1613}
+.altcard.paper h4{font:400 44px/46px 'Fraunces','Instrument Serif',serif;letter-spacing:-.02em}
+.altcard.paper p{color:#5E574D;font-size:14px;line-height:21px;margin-top:10px}
+.altcard.paper .mono{color:#6F675C}
+.altcard.paper .pr{display:flex;gap:10px;margin-top:22px}
+.altcard.paper .pr .c{height:34px;border-radius:999px;padding:0 15px;display:inline-flex;align-items:center;font-size:13px;font-weight:500}
+.altcard.dk{background:var(--s1);box-shadow:inset 0 0 0 1px var(--line)}
+.altcard.dk h4{font:400 44px/46px var(--serif);letter-spacing:-.02em}
+.altcard.dk p{color:var(--t2);font-size:14px;line-height:21px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header>
+  <div class="top mono">
+    <div class="mark"><i class="lamp"></i><span>Refine</span></div>
+    <span>Design direction · Moodboard v1 · Lagos · Nov 2026</span>
+    <span>InWords PRD → Refine</span>
+  </div>
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="mono eyebrow"><b>00</b>Concept direction</div>
+        <h1>Lamp<i>light</i></h1>
+        <p class="tag">Say it plainly. <i>Be understood.</i></p>
+        <div class="feel"><span>Attentive</span><span>Unhurried</span><span>Candid</span><span>Warm-dark</span><span>Editorial</span><span>Discreet</span></div>
+      </div>
+      <div class="hero-right">
+        <div class="mono eyebrow" style="margin-bottom:18px">Your words, read back with receipts</div>
+        <p class="sentence">I'm looking for someone <u class="k">God-fearing</u>, ambitious but gentle, based in <u class="k">Lagos</u>, who wants <u class="k">marriage</u> in the next two years, and <u class="n">ideally</u> loves to cook.</p>
+        <div class="chips-hero">
+          <span class="chip nn">God-fearing</span>
+          <span class="chip nn">Lives in Lagos</span>
+          <span class="chip nn">Wants marriage · 2 yrs</span>
+          <span class="chip st">Ambitious</span>
+          <span class="chip st">Gentle</span>
+          <span class="chip nh">Loves to cook</span>
+        </div>
+        <div class="hero-foot mono">
+          <div>Mood<p>A dark room, one warm lamp, one careful listener. The user's own words are the brightest thing on screen.</p></div>
+          <div>Ember rule<p>One ember accent per screen, the “live” thing. Priority is shape, never colour alone.</p></div>
+          <div>Not<p>Swipe stamps, confetti, neon pink, scores in percent, sparkle-wand AI.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 01 INSPIRATION ============ -->
+<section>
+  <div class="sec-head">
+    <div><div class="mono eyebrow"><b>01</b>Inspiration — what we take, what we leave</div>
+    <h2 class="sec">The room we're <i>building</i></h2></div>
+    <p>Ten pins, chosen for restraint. <code style="font:500 12px var(--mono);color:var(--ember-hi)">profile_1</code> sets the tone; the others lend structure (composer, two-pane review, chip anatomy, chat rhythm) and are re-skinned in warm black and bone. Faces are placeholders for mood only.</p>
+  </div>
+
+  <div class="board">
+    <figure class="pin p-profile"><div class="im"><img src="../inspiration/profile_1.png" alt=""></div>
+      <figcaption><b>profile_1 · Tone</b>Full-bleed moody photo, huge light name, 1px hairlines, ember dot. <em>Leave: “Queer” label, +/− buttons.</em></figcaption></figure>
+
+    <figure class="pin p-chat2"><div class="im"><img src="../inspiration/chat_2.png" alt="" style="object-position:50% 40%"></div>
+      <figcaption><b>chat_2 · Canvas</b>Near-black with a soft top wash, quiet low-contrast bubbles, “Online” dot. <em>Leave: hot-pink send, voice note, credits.</em></figcaption></figure>
+
+    <figure class="pin p-chat3"><div class="im"><img src="../inspiration/chat_3.png" alt="" style="object-position:50% 40%"></div>
+      <figcaption><b>chat_3 · Inbox</b>Hairline rows, search + filter, ticks. <em>Leave: story row, calls.</em></figcaption></figure>
+
+    <figure class="pin p-match"><div class="im"><img src="../inspiration/match_1.png" alt=""></div>
+      <figcaption><b>match_1 · Restraint</b>Two overlapping photos, one sentence, one action. <em>Leave: pastel, hearts.</em></figcaption></figure>
+
+    <div class="p-quote"><q>One warm lamp.<br><i>One careful listener.</i></q></div>
+
+    <figure class="pin p-style"><div class="im"><img src="../inspiration/style_1.png" alt=""></div>
+      <figcaption><b>style_1 · Photo cards</b>Full-bleed portraits, name + age baseline, scrim, tiny chips. <em>Leave: map, icon dock.</em></figcaption></figure>
+
+    <figure class="pin p-brief1"><div class="im"><img src="../inspiration/brief_1.png" alt=""></div>
+      <figcaption><b>brief_1 · Frosted panel</b>Inset glass with hairline, notch to its source. <em>Leave: score rings, neon.</em></figcaption></figure>
+
+    <figure class="pin p-brief3"><div class="im"><img src="../inspiration/brief_3.png" alt=""></div>
+      <figcaption><b>brief_3 · Composer</b>Ghost-text completion and the footer “can make mistakes” line → “We can misread. Edit anything.”</figcaption></figure>
+
+    <figure class="pin p-b4"><div class="im"><img src="../inspiration/brief_4.png" alt=""></div>
+      <figcaption><b>brief_4 · Focus state</b>Thin sweep outline, removable items with ✕ (→ chips), white round send. <em>Leave: model pills.</em></figcaption></figure>
+
+    <figure class="pin p-b5"><div class="im"><img src="../inspiration/brief_5.jpg" alt=""></div>
+      <figcaption><b>brief_5 · Review</b>Words left, structure right; Save / Save and Re-run → Confirm / Read again.</figcaption></figure>
+
+    <figure class="pin p-b8"><div class="im"><img src="../inspiration/brief_8.png" alt=""></div>
+      <figcaption><b>brief_8 · Chip anatomy</b>Outlined, small, edge-fade scroll, small-caps counts, dashed dividers.</figcaption></figure>
+
+    <div class="p-anti">
+      <div class="thumbs">
+        <img src="../inspiration/match_2.png" alt=""><img src="../inspiration/onboarding_1.png" alt=""><img src="../inspiration/profile_2.png" alt="">
+      </div>
+      <p><b>Anti-references</b>match_2 (neon “It's a Match” lettering, emoji replies), onboarding_1 (illustrated, cheery), profile_2 (hearts, stars). This is what “gamified” looks like; we do none of it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 PALETTE ============ -->
+<section>
+  <div class="sec-head">
+    <div><div class="mono eyebrow"><b>02</b>Colour — Night Room &amp; Paper</div>
+    <h2 class="sec">Warm black, <i>bone</i>, one ember</h2></div>
+    <p>Dark-first, never pure black. Ember is the temperature of evening light over the lagoon. Harmattan (haze gold) carries “potential differences”, adire indigo carries “mutual”, hibiscus is for safety only. Contrast ratios are against <code style="font:500 12px var(--mono)">#0B0A09</code>.</p>
+  </div>
+
+  <div class="pal-label mono"><span>Dark · default</span><span>Neutrals → text → accents</span></div>
+  <div class="sw-row d">
+    <div class="sw tall" style="background:#0B0A09"><div class="n">Night</div><div><div class="h">#0B0A09</div><div class="r">--bg · canvas</div></div></div>
+    <div class="sw tall" style="background:#12100E"><div class="n">Surface 1</div><div><div class="h">#12100E</div><div class="r">cards, composer</div></div></div>
+    <div class="sw tall" style="background:#1A1714"><div class="n">Surface 2</div><div><div class="h">#1A1714</div><div class="r">sheets, bubbles</div></div></div>
+    <div class="sw tall" style="background:#24201C"><div class="n">Surface 3</div><div><div class="h">#24201C</div><div class="r">inputs, drag-lift</div></div></div>
+    <div class="sw tall" style="background:#F4EEE4;color:#0B0A09"><div class="n">Bone</div><div><div class="h">#F4EEE4</div><div class="r">--text · 17.1:1</div></div></div>
+    <div class="sw tall" style="background:#B9B0A2;color:#0B0A09"><div class="n">Bone 300</div><div><div class="h">#B9B0A2</div><div class="r">--text-2 · 9.2:1</div></div></div>
+    <div class="sw tall" style="background:#8A8276;color:#0B0A09"><div class="n">Bone 500</div><div><div class="h">#8A8276</div><div class="r">--text-3 · 5.2:1</div></div></div>
+    <div class="sw tall" style="background:linear-gradient(180deg,rgba(244,238,228,.10),rgba(244,238,228,.20));"><div class="n">Hairline</div><div><div class="h">rgba(244,238,228,.10/.20)</div><div class="r">1px lines</div></div></div>
+  </div>
+  <div class="sw-row" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr">
+    <div class="sw" style="background:#E0673C;color:#0B0A09"><div class="n" style="font-size:40px;line-height:40px">Ember</div><div><div class="h">#E0673C · hi #F09470</div><div class="r">The one accent · 5.8:1</div></div></div>
+    <div class="sw" style="background:#D1A85F;color:#0B0A09"><div class="n">Harmattan</div><div><div class="h">#D1A85F</div><div class="r">differences · 8.9:1</div></div></div>
+    <div class="sw" style="background:#8FA2DC;color:#0B0A09"><div class="n">Adire</div><div><div class="h">#8FA2DC</div><div class="r">mutual / info · 7.9:1</div></div></div>
+    <div class="sw" style="background:#8FB59A;color:#0B0A09"><div class="n">Sage</div><div><div class="h">#8FB59A</div><div class="r">verified · 8.7:1</div></div></div>
+    <div class="sw" style="background:#E0697B;color:#0B0A09"><div class="n">Hibiscus</div><div><div class="h">#E0697B · fill #C9475A</div><div class="r">safety only · 6.1:1</div></div></div>
+  </div>
+
+  <div class="light-panel">
+    <div class="pal-label mono"><span>Light · “Paper” (also the Paper Letter alternate)</span><span>same roles, darker accents for text contrast</span></div>
+    <div class="sw-row">
+      <div class="sw" style="background:#F5F0E6"><div class="n">Paper</div><div><div class="h">#F5F0E6</div><div class="r">--bg</div></div></div>
+      <div class="sw" style="background:#FBF8F2"><div class="n">Surface 1</div><div><div class="h">#FBF8F2</div><div class="r">cards</div></div></div>
+      <div class="sw" style="background:#EEE7DA"><div class="n">Surface 2</div><div><div class="h">#EEE7DA</div><div class="r">sheets</div></div></div>
+      <div class="sw" style="background:#1A1613;color:#F5F0E6"><div class="n">Ink</div><div><div class="h">#1A1613</div><div class="r">text · 15.8:1</div></div></div>
+      <div class="sw" style="background:#B8481F;color:#FBF8F2"><div class="n">Ember</div><div><div class="h">#B8481F</div><div class="r">4.6:1</div></div></div>
+      <div class="sw" style="background:#7A5C1A;color:#FBF8F2"><div class="n">Harmattan</div><div><div class="h">#7A5C1A</div><div class="r">5.5:1</div></div></div>
+      <div class="sw" style="background:#34457A;color:#FBF8F2"><div class="n">Adire</div><div><div class="h">#34457A</div><div class="r">8.1:1</div></div></div>
+      <div class="sw" style="background:#3F6E52;color:#FBF8F2"><div class="n">Sage</div><div><div class="h">#3F6E52</div><div class="r">5.2:1</div></div></div>
+      <div class="sw" style="background:#A3283B;color:#FBF8F2"><div class="n">Hibiscus</div><div><div class="h">#A3283B</div><div class="r">6.3:1</div></div></div>
+    </div>
+  </div>
+
+  <div class="ember-rule">
+    <div class="er"><div class="mono eyebrow">Priority is shape, not colour</div>
+      <h4>Three tiers, monochrome</h4>
+      <p>Fill, border and a small glyph carry the meaning, so it works for colour-blind users and survives a greyscale screenshot.</p>
+      <div class="tiers">
+        <span class="chip nn">Non-negotiable · solid bone, solid bar</span>
+        <span class="chip st">Strong · outlined, half bar</span>
+        <span class="chip nh">Nice to have · dashed, dashed bar</span>
+      </div></div>
+    <div class="er"><div class="mono eyebrow">Colour proportion</div>
+      <h4>90 / 9 / 1</h4>
+      <p>Warm black and bone do almost everything. Semantic hues are small. Ember is a single live dot, ring, or hairline.</p>
+      <div class="bar"><i style="flex:90;background:#0B0A09"></i><i style="flex:5.5;background:#F4EEE4"></i><i style="flex:2;background:#D1A85F"></i><i style="flex:1.5;background:#8FA2DC"></i><i style="flex:1;background:#E0673C"></i></div></div>
+    <div class="er"><div class="mono eyebrow">Photo scrim &amp; lamp wash</div>
+      <h4>Light only where it's warm</h4>
+      <p>A vertical scrim guarantees type contrast on photos; a faint ember wash at the top of each screen is the lamp.</p>
+      <div class="bar" style="height:56px;background:linear-gradient(180deg,rgba(11,10,9,0) 0,rgba(11,10,9,.9) 100%),linear-gradient(90deg,#6a4a38,#8d6a52 40%,#3b2a22)"></div></div>
+  </div>
+</section>
+
+<!-- ============ 03 TYPE ============ -->
+<section>
+  <div class="sec-head">
+    <div><div class="mono eyebrow"><b>03</b>Typography — voice and system</div>
+    <h2 class="sec">A serif that <i>speaks</i>, a grotesk that <i>works</i></h2></div>
+    <p>Instrument Serif gives names, headlines, and the user's own words an editorial voice (italic for emphasis and “reading” text). Geist keeps UI calm and legible. Geist Mono sets hairline-style labels. All free on Google Fonts.</p>
+  </div>
+  <div class="type-grid">
+    <div>
+      <div class="spec-big">Say who<br>you <i>are.</i></div>
+      <div class="fonts">
+        <div class="font"><div class="mono eyebrow">Display · Instrument Serif</div><div class="gl" style="font-family:var(--serif)">Aa <i>Aa</i></div><p>Names, titles, quotes, match sentence. Regular and italic only.</p></div>
+        <div class="font"><div class="mono eyebrow">UI · Geist 300–600</div><div class="gl" style="font-family:var(--sans);font-weight:300">Aa</div><p>Body, buttons, chips, inputs. Medium for actions, Light for large labels.</p></div>
+        <div class="font"><div class="mono eyebrow">Labels · Geist Mono</div><div class="gl" style="font-family:var(--mono);font-weight:400;font-size:70px;letter-spacing:-.04em">Aa</div><p>UPPERCASE · +0.08em. Tiers, counts, timestamps, eyebrows.</p></div>
+      </div>
+      <div style="margin-top:56px;border-top:1px solid var(--line2);padding-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:40px">
+        <div><div class="mono eyebrow" style="margin-bottom:10px">Pairing · dossier</div>
+          <div style="font:400 78px/72px var(--serif);letter-spacing:-.03em">Adaeze <span style="color:var(--t2)">31</span></div>
+          <div style="border-top:1px solid var(--line2);margin-top:12px;padding-top:10px;color:var(--t2);font-size:14px;line-height:21px">Product lead · Lekki, Lagos<br>Prays, cooks on Sundays, wants a home that is loud with friends.</div></div>
+        <div><div class="mono eyebrow" style="margin-bottom:10px">Pairing · their words</div>
+          <p style="font:italic 400 30px/38px var(--serif);color:var(--text)">“Someone who prays, but not performative. Ambitious, <span style="color:var(--t2)">but gentle with it.</span>”</p>
+          <div class="mono" style="color:var(--t3);margin-top:14px">You wrote · Brief 1 of 3</div></div>
+      </div>
+    </div>
+    <div class="scale">
+      <div><span class="mono">display-xl<s>Serif 64/60</s></span><span class="s-xl">Begin</span></div>
+      <div><span class="mono">display-l<s>Serif 44/44</s></span><span class="s-l">Who are you hoping to meet?</span></div>
+      <div><span class="mono">display-m<s>Serif 32/36</s></span><span class="s-m">You both want marriage.</span></div>
+      <div><span class="mono">quote<s>Serif it. 22/30</s></span><span class="s-q">“ambitious but gentle”</span></div>
+      <div><span class="mono">title<s>Geist 500 18/26</s></span><span class="s-t">Why you match</span></div>
+      <div><span class="mono">body<s>Geist 400 16/24</s></span><span class="s-b">Both of you live in Lagos and want children.</span></div>
+      <div><span class="mono">body-s<s>Geist 400 14/21</s></span><span class="s-s">They haven't said whether they'd relocate.</span></div>
+      <div><span class="mono">caption<s>Geist 400 12/16</s></span><span class="s-c">We can misread. Edit anything.</span></div>
+      <div><span class="mono">label<s>Mono 500 11/16</s></span><span class="mono" style="color:var(--t2)">Non-negotiable · 3</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 UI FRAGMENTS ============ -->
+<section>
+  <div class="sec-head">
+    <div><div class="mono eyebrow"><b>04</b>Interface fragments — built in HTML/CSS</div>
+    <h2 class="sec">Chips, a dossier, <i>a conversation</i></h2></div>
+    <p>The product's three core surfaces at 1:1: the brief that becomes chips, the ranked match with its evidence, and a thread that remembers why you matched. Photos are placeholders from the pin set.</p>
+  </div>
+
+  <div class="stage">
+    <!-- col 1: brief + lanes -->
+    <div class="col">
+      <div>
+        <div class="frag-label mono"><span>Describe · brief input</span><span>Brief 1 of 3</span></div>
+        <div class="composer">
+          <div class="p">Describe the person you want to meet</div>
+          <h3>Who are you hoping to meet?</h3>
+          <div class="txt">I want someone <u>God-fearing</u>, <u>ambitious but gentle</u>, based in <u>Lagos</u>, ready for <u>marriage</u> in two years. <u class="d">Ideally</u> a good cook<span class="caret"></span><span class="ghost"> and close to family…</span></div>
+          <div class="bar2"><span>612 / 5000</span><div class="send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B0A09" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div></div>
+        </div>
+        <div class="reading"><i class="dot"></i>Read 7 things. <span style="color:var(--t3)">Tap any to edit.</span></div>
+        <div class="chips-flow">
+          <span class="chip nn">God-fearing</span><span class="chip nn">Lives in Lagos</span><span class="chip nn">Wants marriage · 2 yrs</span>
+          <span class="chip st">Ambitious</span><span class="chip st edit">Gentle</span><span class="chip nh">Good cook</span><span class="chip q">Close to family — how close?</span>
+        </div>
+        <div class="disc">We can misread. <a>Edit anything.</a> Text we couldn't read stays visible: <i style="font-family:var(--serif);font-size:15px;color:var(--t2)">“a man's man”</i></div>
+      </div>
+      <div>
+        <div class="frag-label mono"><span>Review · priority lanes</span><span>drag, or tap “Priority”</span></div>
+        <div class="panel" style="padding:8px 24px 14px">
+          <div class="lanes">
+            <div class="lane" style="border-top:0"><header class="mono"><b style="font-weight:500;color:var(--text)">Non-negotiable</b><span>3</span></header><div class="chips-flow"><span class="chip nn">God-fearing</span><span class="chip nn">Lives in Lagos</span><span class="chip nn">Wants marriage · 2 yrs</span></div></div>
+            <div class="lane drop"><header class="mono"><b style="font-weight:500;color:var(--text)">Strong</b><span>2</span></header><div class="chips-flow"><span class="chip st">Ambitious</span><span class="chip st">Gentle</span><span class="slot">Drop here</span></div></div>
+            <div class="lane"><header class="mono"><b style="font-weight:500;color:var(--text)">Nice to have</b><span>1</span></header><div class="chips-flow"><span class="chip nh">Good cook</span></div></div>
+          </div>
+        </div>
+        <div class="clar" style="margin-top:14px"><p>When you say “close to family”, how close?</p><div class="pills"><span class="pill">Same city</span><span class="pill on">Weekly visits</span><span class="pill">Lives with them</span><span class="pill" style="color:var(--t3)">Skip</span></div></div>
+      </div>
+    </div>
+
+    <!-- col 2: match card -->
+    <div class="col">
+      <div>
+        <div class="frag-label mono"><span>Dossier · ranked match</span><span>01 / 05</span></div>
+        <div class="phone">
+          <div class="photo"><div class="bgimg" style="background:url(../inspiration/profile_1.png) 53% 24%/150% auto no-repeat;filter:saturate(.88) contrast(1.02) sepia(.08)"></div>
+            <div class="sb"><span>09:41</span><span style="font-weight:400;color:var(--t2)">●●●</span></div>
+            <div class="seg"><i></i><i></i><i></i><i></i></div>
+            <div class="ov">
+              <div class="meta mono"><span class="live"><i></i>Strong alignment</span><span>Lekki · 3 km</span></div>
+              <div class="nm"><h3>Tobi</h3><span>31</span></div>
+              <div class="one">Product lead. Prays, cooks on Sundays, wants a home that is loud with friends.</div>
+            </div>
+          </div>
+          <div class="why">
+            <div class="tabs mono"><b>Why you match · 3</b><span>Differences · 2</span></div>
+            <div class="ev"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#F4EEE4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l4 4 8-9"/></svg><div><p>Both want marriage within two years.</p><q>you wrote “ready, not rushing”</q></div></div>
+            <div class="ev"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#F4EEE4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l4 4 8-9"/></svg><div><p>Faith matters to both, quietly.</p><q>“prays, but not performative”</q></div></div>
+            <h5 class="d mono">Potential differences</h5>
+            <div class="ev diff"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="5.5"/></svg><div><p>You like quiet weekends; he says he's “always out”. Worth a conversation.</p></div></div>
+            <div class="foot">Based on what you both wrote. Not a score.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- col 3: lanes, buttons, chat, mutual -->
+    <div class="col">
+      <div>
+        <div class="frag-label mono"><span>Buttons</span><span>bone on ink · never ember</span></div>
+        <div class="panel">
+          <div class="btngrid">
+            <div><a class="btn pri">Confirm</a><span class="cap">Primary</span></div>
+            <div><a class="btn sec">Read again</a><span class="cap">Secondary</span></div>
+            <div><a class="btn pri press">Express interest</a><span class="cap">Pressed · scale .97</span></div>
+            <div><a class="btn dis">Continue</a><span class="cap">Disabled</span></div>
+            <div><a class="btn txt">Pass</a><span class="cap">Text</span></div>
+            <div><a class="btn pri sm"><i class="dot" style="width:7px;height:7px;box-shadow:none;background:#E0673C"></i>Reading…</a><span class="cap">Working · lamp dot</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+      <div class="frag-label mono" ><span>Glass · over photo only</span><span>one layer</span></div>
+      <div style="height:210px;border-radius:28px;overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px var(--line)">
+        <div class="bgimg" style="background:url(../inspiration/profile_1.png) 53% 24%/150% auto no-repeat;filter:saturate(.85) sepia(.08)"></div>
+        <div style="position:absolute;left:20px;right:20px;bottom:18px;background:rgba(11,10,9,.42);backdrop-filter:blur(24px) saturate(1.15);-webkit-backdrop-filter:blur(24px) saturate(1.15);border:1px solid rgba(244,238,228,.14);border-radius:20px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center"><div><div class="mono" style="color:var(--t2)">Why you match · 3</div><div style="font:italic 400 20px/26px var(--serif);margin-top:2px">“prays, but not performative”</div></div><div class="send" style="width:36px;height:36px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0B0A09" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div></div>
+      </div>
+      </div>
+      <div class="panel" style="margin-top:0;padding:20px 22px"><div class="mono eyebrow" style="margin-bottom:10px">Toast · Sonner</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--s3);border-radius:18px;padding:14px 18px;box-shadow:inset 0 0 0 1px var(--line2),0 16px 40px rgba(0,0,0,.45);font-size:14px"><span>Passed on Amaka.</span><span style="color:var(--ember-hi);font-weight:500">Undo</span></div></div>
+    </div>
+  </div>
+
+  <div class="stage" style="margin-top:24px;grid-template-columns:420px 1fr 420px">
+    <div>
+      <div class="frag-label mono"><span>Thread · message pair</span><span>Messages</span></div>
+      <div class="chat">
+        <div class="ch-head"><div class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F4EEE4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div><div class="av"><div class="bgimg face"></div></div><div><h4>Tobi</h4><small><i></i>Online</small></div></div>
+        <div class="whystrip"><p>Matched because <i>you both want marriage, live in Lagos, and keep Sundays for church.</i></p><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8276" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="day mono">Today</div>
+        <div class="bub in">Your line about Sunday lunches stayed with me. What does yours look like?</div>
+        <div class="time mono">10:25</div>
+        <div class="bub out">Jollof, my mum's phone calls, and a nap I defend fiercely.</div>
+        <div class="time mono r">10:27 · ✓✓</div>
+        <div class="typing"><i></i><i></i><i></i></div>
+        <div class="comp"><span>Write a message…</span><div class="send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B0A09" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="frag-label mono"><span>Inbox · list rows</span><span>Pinned · All</span></div>
+      <div class="panel" style="padding:20px 28px">
+        <div class="mono" style="color:var(--t3);padding:6px 0 10px">Pinned <span style="background:var(--s3);padding:0 6px;border-radius:6px;margin-left:6px">1</span></div>
+        <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-top:1px solid var(--line)"><div class="av" style="width:56px;height:56px;border-radius:18px"><div class="bgimg face"></div></div><div><div style="font:500 17px/24px var(--sans)">Tobi</div><div style="color:var(--t2);font-size:14px;line-height:20px">Your line about Sunday lunches stayed with me…</div></div><div style="text-align:right"><div class="mono" style="color:var(--t3)">10:25</div><i class="dot" style="display:inline-block;margin-top:8px"></i></div></div>
+        <div class="mono" style="color:var(--t3);padding:12px 0 10px">All <span style="background:var(--s3);padding:0 6px;border-radius:6px;margin-left:6px">3</span></div>
+        <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-top:1px solid var(--line)"><div class="av" style="width:56px;height:56px;border-radius:18px;background:var(--s3);display:grid;place-items:center;font:400 28px var(--serif);color:var(--t2)">A</div><div><div style="font:500 17px/24px var(--sans)">Amaka</div><div style="color:var(--t3);font-size:14px;line-height:20px">You: Friday works for me.</div></div><div style="text-align:right"><div class="mono" style="color:var(--t3)">Tue</div><div style="color:var(--t3);font-size:12px;margin-top:6px">✓✓</div></div></div>
+        <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-top:1px solid var(--line)"><div class="av" style="width:56px;height:56px;border-radius:18px;background:var(--s3);display:grid;place-items:center;font:400 28px var(--serif);color:var(--t2)">K</div><div><div style="font:500 17px/24px var(--sans)">Kunle</div><div style="color:var(--t3);font-size:14px;line-height:20px">Say hello — you both keep Sundays for church.</div></div><div style="text-align:right"><div class="mono" style="color:var(--t3)">New</div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="frag-label mono"><span>Mutual match · two lamps</span><span>once, quietly</span></div>
+      <div class="mutual">
+        <div class="pair"><div class="a"><div class="bgimg face2"></div></div><div class="b"><div class="bgimg face"></div></div><div class="ln"></div></div>
+        <h3>You both.</h3>
+        <p>want marriage, live in Lagos, and keep Sundays for church.</p>
+        <a class="btn pri">Say hello</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 MOTION ============ -->
+<section>
+  <div class="sec-head">
+    <div><div class="mono eyebrow"><b>05</b>Motion — settled, not bouncy</div>
+    <h2 class="sec">Five signature <i>moments</i></h2></div>
+    <p>Low-bounce springs, long calm tails, opacity and translate over scale pops. Every move says where something came from. Demos play once as they scroll into view; with reduced motion they show their final state.</p>
+  </div>
+
+  <div class="mo-grid">
+    <div class="mo"><div class="n">①</div><h4>Words become a profile</h4><div class="sub mono">Describe · Welcome</div>
+      <div class="demo d1"><i class="dot"></i><div class="t">Someone <u>God-fearing</u>, in <u>Lagos</u>…</div><div class="c"><span class="chip nn">God-fearing</span><span class="chip nn">Lagos</span><span class="chip st">Gentle</span></div></div>
+      <ol><li><b>Pause 700 ms</b> → composer outline sweeps once; lamp dot breathes.</li>
+        <li>Underlines <b>draw</b> under source phrases, 360 ms, stagger 90.</li>
+        <li>Chips rise in, <b>spring.snap</b>, stagger 60 ms, y 14→0.</li>
+        <li>Tap a chip ↔ its phrase brightens; others dim to 40%.</li>
+        <li>Unread text stays plain: “Not read — rephrase?”</li></ol>
+      <div class="rm"><b>Reduced</b>One 200 ms fade; static dot; link highlight is instant.</div></div>
+
+    <div class="mo"><div class="n">②</div><h4>Move it up</h4><div class="sub mono">Priority lanes</div>
+      <div class="demo d2"><div class="l" style="top:24px"><span>Non-negotiable</span></div><div class="l" style="top:94px"><span>Strong</span></div><div class="slot">Drop here</div><div class="m"><span class="chip st">Gentle</span></div></div>
+      <ol><li><b>Lift</b> at 180 ms hold: scale 1.04, elevation 3, light haptic; rest dim to 70%.</li>
+        <li>Lane hairline strengthens; <b>dashed slot</b> opens, neighbours slide.</li>
+        <li><b>Drop</b> with spring.drag; restyle crossfade 160 ms; medium haptic.</li>
+        <li>Into Non-negotiable: “We'll only show people who match this.” + Undo.</li>
+        <li>Menu path for keyboard and screen readers.</li></ol>
+      <div class="rm"><b>Reduced</b>No lift or travel; instant restyle with a 160 ms fade.</div></div>
+
+    <div class="mo"><div class="n">③</div><h4>Evidence reveal</h4><div class="sub mono">Why you match</div>
+      <div class="demo d3">
+        <div class="e"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="#F4EEE4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l4 4 8-9"/></svg>Both want marriage</div>
+        <div class="e"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="#F4EEE4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l4 4 8-9"/></svg>Faith matters, quietly</div>
+        <div class="e"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="#F4EEE4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l4 4 8-9"/></svg>Both in Lagos</div>
+        <div class="e df"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="5.5"/></svg>Weekends differ</div></div>
+      <ol><li>Vaul sheet rises, <b>spring.soft</b>; photo behind dims to 55%.</li>
+        <li>Each line every <b>450 ms</b>: tick <b>draws</b> (pathLength), text fades up, source quote follows.</li>
+        <li>After a 600 ms pause, differences arrive <b>faster</b> (250 ms), open circle, no tick.</li>
+        <li>Tap a line → brief scrolls to its source.</li></ol>
+      <div class="rm"><b>Reduced</b>Fade only; ticks static; all lines at once.</div></div>
+
+    <div class="mo"><div class="n">④</div><h4>Your shortlist, in order</h4><div class="sub mono">Arrival · dossier open</div>
+      <div class="demo d4"><div class="r"><i></i>Tobi · 31<em>01</em></div><div class="r"><i></i>Amaka · 29<em>02</em></div><div class="r"><i></i>Kunle · 33<em>03</em></div></div>
+      <ol><li>Rows rise top→bottom, <b>stagger 80 ms</b>, spring.settle; max 5 rows.</li>
+        <li>Rank numerals tick up (400 ms). Ember dot on the first unseen only.</li>
+        <li>Tap: photo <b>layoutId</b>-expands to full-bleed, spring.soft ≈ 600 ms.</li>
+        <li>Scrim fades in; hairlines draw (name / age / bio) like profile_1.</li>
+        <li>No stamps, no rotation. Pass slides −24 px + Undo toast.</li></ol>
+      <div class="rm"><b>Reduced</b>Fade in; dossier by crossfade; no parallax.</div></div>
+
+    <div class="mo"><div class="n">⑤</div><h4>Two lamps</h4><div class="sub mono">Mutual match</div>
+      <div class="demo d5"><div class="bl"></div><div class="a"><div class="bgimg face2"></div></div><div class="b"><div class="bgimg face"></div></div><div class="ln"></div></div>
+      <ol><li>Screen dims. Two photos enter from the edges, <b>spring.soft</b>.</li>
+        <li>1 px ember hairline <b>draws</b> between them (500 ms).</li>
+        <li>They meet with a 4 px overlap; <b>one</b> warm bloom (900 ms), soft haptic. No confetti.</li>
+        <li>“You both.” then the italic reason, blur-fading by line.</li>
+        <li>CTA morphs into a composer; suggestion is editable, never auto-sent.</li></ol>
+      <div class="rm"><b>Reduced</b>Final layout by 200 ms fade; no bloom or haptic.</div></div>
+  </div>
+
+  <div class="tok">
+    <div class="box"><div class="mono eyebrow">Spring tokens · Motion</div><h4>Stiffness · damping</h4>
+      <table>
+        <tr><th>Token</th><th>Values</th><th>Use</th></tr>
+        <tr><td><code>settle</code></td><td>260 · 30 · m1</td><td>Default UI, lists, rows</td></tr>
+        <tr><td><code>soft</code></td><td>170 · 26 · m1</td><td>Sheets, photo expand</td></tr>
+        <tr><td><code>snap</code></td><td>420 · 34 · m.9</td><td>Chips, toggles, press</td></tr>
+        <tr><td><code>drag</code></td><td>300 · 28 · m1</td><td>Drop, release, snap points</td></tr>
+        <tr><td><code>bloom</code></td><td>dur .9 · bounce 0</td><td>Match light, once</td></tr>
+      </table></div>
+    <div class="box"><div class="mono eyebrow">Durations &amp; easing</div><h4>Exits faster than enters</h4>
+      <div class="dd"><div><b>120</b><span class="mono">instant ms</span></div><div><b>200</b><span class="mono">quick ms</span></div><div><b>320</b><span class="mono">base ms</span></div><div><b>520</b><span class="mono">slow ms</span></div></div>
+      <p style="margin-top:14px">ease.out <code style="font:500 12px var(--mono);color:var(--ember-hi)">.22,1,.36,1</code> · inOut <code style="font:500 12px var(--mono);color:var(--ember-hi)">.65,0,.35,1</code></p></div>
+    <div class="box"><div class="mono eyebrow">Reduced motion</div><h4>Calm by default</h4>
+      <p>Honour <code style="font:500 12px var(--mono);color:var(--ember-hi)">prefers-reduced-motion</code> and an in-app toggle. Springs become 200 ms fades, travel and parallax are removed, loops stop, and nothing is conveyed by motion alone. Every drag has a button path; every moment has a story with reduce on.</p>
+      <pre style="margin-top:16px;padding:14px 16px;border-radius:16px;background:#0A0908;box-shadow:inset 0 0 0 1px var(--line);font:400 12px/19px var(--mono);color:var(--t2);white-space:pre-wrap">&lt;MotionConfig reducedMotion="user"&gt;
+useCalm() → {
+  spring: { duration: .2 },
+  distance: 0, stagger: 0
+}</pre></div>
+  </div>
+</section>
+
+<!-- ============ 06 ALTERNATE ============ -->
+<section>
+  <div class="sec-head">
+    <div><div class="mono eyebrow"><b>06</b>Alternate direction &amp; sourcing</div>
+    <h2 class="sec">Paper Letter, <i>and the toolbox</i></h2></div>
+    <p>Paper Letter is the light-first alternate: printed-dossier calm, almost no motion. It ships as the Light theme of the same tokens. Components come from shadcn and Motion first; spectacle is rationed.</p>
+  </div>
+  <div class="alt">
+    <div class="altcard paper"><div class="mono">Alternate · Paper Letter</div><h4 style="margin-top:12px">Printed dossier, margin notes.</h4>
+      <p>Warm paper, ink text, hairline rules, small bordered “prints” instead of full-bleed photos. More trustworthy and marriage-minded, less intimate than profile_1. Motion is page-turn crossfades only.</p>
+      <div class="pr"><span class="c" style="background:#1A1613;color:#F5F0E6">Non-negotiable</span><span class="c" style="box-shadow:inset 0 0 0 1px #1A1613">Strong</span><span class="c" style="border:1px dashed #6F675C;color:#5E574D">Nice to have</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr;gap:28px;margin-top:34px;padding-top:26px;border-top:1px solid rgba(26,22,19,.18)">
+        <div style="transform:rotate(-2.2deg);background:#FBF8F2;padding:8px 8px 22px;box-shadow:0 10px 24px rgba(60,40,20,.18),0 0 0 1px rgba(26,22,19,.1)"><div class="face" style="height:164px;background-position:51% 25%;background-size:200% auto;filter:saturate(.8) sepia(.12)"></div><div style="font:italic 400 15px/18px 'Instrument Serif',serif;margin-top:8px;text-align:center">Tobi, 31</div></div>
+        <div><div class="mono">Margin notes</div>
+          <p style="font:italic 400 22px/28px 'Instrument Serif',serif;color:#1A1613;margin-top:10px">Both want marriage within two years.</p>
+          <p style="font:italic 400 22px/28px 'Instrument Serif',serif;color:#1A1613;margin-top:6px">Faith matters to both, quietly.</p>
+          <p style="font:italic 400 22px/28px 'Instrument Serif',serif;color:#7A5C1A;margin-top:6px">Weekends may differ. Worth asking.</p></div></div></div>
+    <div class="altcard dk"><div class="mono eyebrow">Component sourcing</div>
+      <h4 style="margin-top:12px;font-size:36px;line-height:40px">Where each tool earns its place</h4>
+      <table class="src" style="margin-top:16px">
+        <tr><td style="width:150px"><b style="font-weight:500">shadcn · Radix</b></td><td>Foundation: forms, tabs, popover, dialog, switch</td></tr>
+        <tr><td><b style="font-weight:500">Astryx</b></td><td>One-week spike for tokens and sheets; adopt only if it beats shadcn</td></tr>
+        <tr><td><b style="font-weight:500">Motion</b></td><td>Springs, layoutId, Reorder, drag, AnimatePresence</td></tr>
+        <tr><td><b style="font-weight:500">Vaul · Sonner</b></td><td>Evidence sheet, safety · undo toasts</td></tr>
+        <tr><td><b style="font-weight:500">Transitions.dev · Bencho</b></td><td>Step/route patterns · press, chip, focus micro-moves</td></tr>
+        <tr><td><b style="font-weight:500">Magic UI · React Bits</b></td><td>BlurFade, NumberTicker · SplitText on the Welcome hero only</td></tr>
+        <tr><td><b style="font-weight:500">HorizonX · Rive</b></td><td>Welcome lamp-glow shader, splash · match bloom if CSS janks</td></tr>
+        <tr><td style="border:0"><b style="font-weight:500">Lucide</b></td><td style="border:0">1.5 px stroke icons. No hearts, flames, or sparkles</td></tr>
+      </table></div>
+  </div>
+</section>
+
+<footer class="foot-note mono"><span>Refine · Lamplight</span><span>Instrument Serif · Geist · Geist Mono</span><span>Say it plainly. Be understood.</span></footer>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('play-on');io.unobserve(e.target)}})},{threshold:.5});
+  document.querySelectorAll('.demo').forEach(function(d){io.observe(d)});
+})();
+</script>
+</body>
+</html>
